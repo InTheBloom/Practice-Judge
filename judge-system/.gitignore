@@ -1,4 +1,4 @@
-/judge-system/judge
+/judge
 *.o
 *.a
 *.exe
