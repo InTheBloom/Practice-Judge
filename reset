@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+# 開発初期用 dbリセットくん（もう使わない）
+
+DB_FILE="data.db"
+MODELS_FILE="models.sql"
+SEED_FILE="db_seed.sql"
+
+echo "==> Removing old database..."
+rm -f "$DB_FILE"
+
+echo "==> Creating tables..."
+sqlite3 "$DB_FILE" < "$MODELS_FILE"
+
+echo "==> Inserting seed data..."
+sqlite3 "$DB_FILE" < "$SEED_FILE"
+
+echo "==> Done. Current tables:"
+sqlite3 "$DB_FILE" ".tables"
+
+echo
+echo "==> Sample data:"
+sqlite3 "$DB_FILE" "SELECT * FROM problems;"

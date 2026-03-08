@@ -1,0 +1,6 @@
+!/DB_BACKUP/
+/DB_BACKUP/*
+/data.db
+
+!/static/
+/static/*

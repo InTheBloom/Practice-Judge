@@ -1,0 +1,25 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "author": "InTheBloom",
+  "license": "MIT",
+  "description": "online-judge backend api",
+  "dependencies": {
+    "@react-router/express": "^7.9.6",
+    "adm-zip": "^0.5.16",
+    "bcrypt": "^6.0.0",
+    "better-sqlite3": "^12.4.1",
+    "better-sqlite3-session-store": "^0.1.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "express-session": "^1.18.2",
+    "morgan": "^1.10.1",
+    "multer": "^2.0.2",
+    "node-cron": "^4.2.1"
+  }
+}

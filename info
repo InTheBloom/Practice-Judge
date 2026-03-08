@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# 開発初期用submit監視くん
+
+echo "==== submissions ===="
+sqlite3 data.db "select * from submissions;"
+echo
+echo
+echo "==== results ===="
+sqlite3 data.db "select * from results;"

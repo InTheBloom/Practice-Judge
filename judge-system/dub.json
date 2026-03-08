@@ -1,0 +1,14 @@
+{
+	"authors": [
+		"inthebloom"
+	],
+	"copyright": "Copyright © 2025, inthebloom",
+	"dependencies": {
+		"d2sqlite3": "~>1.0.0"
+	},
+    "libs": ["sqlite3"],
+    "lflags": ["-L-lsqlite3"],
+	"description": "judge system",
+	"license": "BSL-1.0",
+	"name": "judge"
+}

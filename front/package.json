@@ -1,0 +1,38 @@
+{
+  "name": "front",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "react-router build",
+    "dev": "react-router dev",
+    "start": "react-router-serve ./build/server/index.js",
+    "typecheck": "react-router typegen && tsc"
+  },
+  "dependencies": {
+    "@picocss/pico": "^2.1.1",
+    "@react-router/node": "^7.9.2",
+    "@react-router/serve": "^7.9.2",
+    "ace-builds": "^1.43.5",
+    "html-react-parser": "^5.2.10",
+    "http-proxy-middleware": "^3.0.5",
+    "isbot": "^5.1.31",
+    "katex": "^0.16.37",
+    "react": "^19.1.1",
+    "react-ace": "^14.0.1",
+    "react-dom": "^19.1.1",
+    "react-router": "^7.9.5",
+    "serve": "^14.2.5"
+  },
+  "devDependencies": {
+    "@react-router/dev": "^7.9.2",
+    "@tailwindcss/vite": "^4.1.13",
+    "@types/node": "^22",
+    "@types/react": "^19.1.13",
+    "@types/react-dom": "^19.1.9",
+    "baseline-browser-mapping": "^2.9.13",
+    "tailwindcss": "^4.1.13",
+    "typescript": "^5.9.2",
+    "vite": "^7.1.7",
+    "vite-tsconfig-paths": "^5.1.4"
+  }
+}

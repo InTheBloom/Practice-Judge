@@ -1,0 +1,60 @@
+@import "@picocss/pico/css/pico.slate.css";
+@import "@picocss/pico/css/pico.colors.css";
+
+.top-header {
+    --pico-block-spacing-vertical: 0.5rem;
+    --pico-nav-element-spacing-vertical: 0.7rem;
+}
+
+.section-home {
+    margin-top: 3em;
+}
+
+.maincontents {
+    margin-top: 2em;
+    margin-bottom: 5em;
+}
+
+.button-testcase-selector {
+    --pico-border-width: 0.13rem;
+}
+
+.set-selector td:nth-child(1),
+.set-selector td:nth-child(2) {
+    width: 100px;
+}
+
+.set-selector td:nth-child(4),
+.set-selector td:nth-child(5) {
+    width: 100px;
+}
+
+.set-selector td:nth-child(6) {
+    width: 150px;
+}
+
+.sample-copy {
+    --pico-form-element-spacing-vertical: 0.25em;
+    --pico-form-element-spacing-horizontal: 0.25em;
+    margin-left: 0.5em;
+}
+
+button.searchbtn {
+    --pico-form-element-spacing-vertical: 0.5em;
+    --pico-form-element-spacing-horizontal: 0.5em;
+    width: 4em;
+}
+
+.ace-container :where([role="button"]) {
+    border: none;
+    background-color: transparent;
+    padding: 0;
+}
+.ace-container {
+    border: 1px solid #ebebeb;
+}
+
+.button-small-padding {
+    --pico-form-element-spacing-vertical: 0.5em;
+    --pico-form-element-spacing-horizontal: 0.5em;
+}

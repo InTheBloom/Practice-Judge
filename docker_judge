@@ -1,0 +1,36 @@
+# ビルド
+# docker build -f docker_judge -t judge-env .
+
+FROM ubuntu:24.04
+
+# c c++ python3
+RUN apt-get update \
+    && apt-get install -y \
+    build-essential curl unzip python3 \
+    && rm -rf /var/lib/apt/lists/*
+
+# nodejs(nodesource)
+RUN curl -fsSL https://deb.nodesource.com/setup_24.x | bash - \
+    && apt-get update \
+    && apt-get install -y nodejs \
+    && rm -rf /var/lib/apt/lists/*
+
+# user作成 + 切り替え
+RUN useradd -m runner
+USER runner
+
+# D言語(dmd-2.111.0)
+RUN curl -fsS https://dlang.org/install.sh | bash -s dmd-2.111.0
+
+# typescript(Deno v2.5.4）
+RUN curl -fsSL https://deno.land/x/install/install.sh | bash -s v2.5.4
+
+# 環境変数
+ENV LIBRARY_PATH=/home/runner/dlang/dmd-2.111.0/linux/lib64 \
+    LD_LIBRARY_PATH=/home/runner/dlang/dmd-2.111.0/linux/lib64 \
+    PATH=/home/runner/.deno/bin:/home/runner/dlang/dmd-2.111.0/linux/bin64:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+
+WORKDIR /home/runner/work
+
+ENTRYPOINT ["/bin/bash"]

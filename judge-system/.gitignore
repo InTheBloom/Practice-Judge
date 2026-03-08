@@ -1,0 +1,5 @@
+/judge-system/judge
+*.o
+*.a
+*.exe
+*.out
