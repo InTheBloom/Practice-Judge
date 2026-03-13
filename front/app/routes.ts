@@ -4,6 +4,7 @@ export default [
     layout("routes/normal_layout.tsx", [
         // ホーム画面
         route("/", "routes/home.tsx"),
+        route("/for-beginners", "routes/for_beginners.tsx"),
 
         // ユーザ画面
         route("/users/:userName", "routes/userpage.tsx"),
