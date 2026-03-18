@@ -142,7 +142,7 @@ export default function UserPage ({ loaderData }) {
                             return (
                                 <tr key={sub.id}>
                                     <td>
-                                        <Link to={`/problems/no/${sub.problem_id}/submissions/${sub.id}`} target="_blank" rel="noopener noreferrer"># {sub.id}</Link>
+                                        <Link to={`/problems/no/${sub.problem_id}/submissions/${sub.id}`}># {sub.id}</Link>
                                     </td>
                                     <td>{toJST(sub.created_at)}</td>
                                     <td><Link to={`/problems/no/${sub.problem_id}`}>{sub.problem_title}</Link></td>
