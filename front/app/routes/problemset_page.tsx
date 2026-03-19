@@ -9,7 +9,7 @@ export function meta({ data }: Route.MetaArgs) {
 
     let title = "問題セットが見つかりません";
     if (id != null && ptitle != null) {
-        title = `#${data.problemset.id} ${data.problemset.title}`;
+        title = `${data.problemset.title}`;
     }
     return [
         { title: `${title} - Practice Judge` },
@@ -92,7 +92,7 @@ export default function Page({ params, loaderData }) {
     return (
         <main className="container">
             <article>
-                <h1>#{problemset.id} {problemset.title}</h1>
+                <h1>{problemset.title}</h1>
                 <hr />
                 {parse(problemset.description)}
             </article>

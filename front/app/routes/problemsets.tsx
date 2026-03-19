@@ -54,6 +54,8 @@ export default function Problemsets ({ loaderData }) {
         return "";
     }
 
+    const sortedProblemsets = problemsets.sort((a, b) => a.title == b.title ? 0 : a.title < b.title ? -1 : 1);
+
     return (
         <main className="container">
             <h1>問題セット一覧</h1>
@@ -62,7 +64,7 @@ export default function Problemsets ({ loaderData }) {
                 return (
                     <article key={ps.id} className={calcColor(ps.id)}>
                         <Link to={`/problemsets/no/${ps.id}`}>
-                            #{ps.id} {ps.title}
+                            {ps.title}
                         </Link>
                     </article>
                 );
