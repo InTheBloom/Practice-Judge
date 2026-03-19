@@ -40,6 +40,9 @@ const isValidPassword = (pass: string) => {
     if (pass.length < 10) {
         return false;
     }
+    if (pass.length > 50) {
+        return false;
+    }
 
     return true;
 };
@@ -122,7 +125,7 @@ export default function SignUpPage() {
             />
           </label>
           <ul>
-            <li>10文字以上である必要があります。</li>
+            <li>10文字以上50文字以下である必要があります。</li>
             <li>半角英数字と記号<code style={{ whiteSpace: "pre" }}>{' '}!"#$%&'()-^\@[;:],./\=~|`{'{'}+*{'}'}{'<>'}?_</code>を使用可能です。</li>
           </ul>
         </div>

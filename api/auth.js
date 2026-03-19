@@ -42,6 +42,9 @@ const isValidPassword = (pass) => {
     if (pass.length < 10) {
         return false;
     }
+    if (50 < pass.length) {
+        return false;
+    }
 
     return true;
 };
