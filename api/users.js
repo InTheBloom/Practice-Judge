@@ -61,7 +61,7 @@ usersRouter.get('/:username/solved', (req, res) => {
         WHERE s.user_id = ? and s.status = ? and p.is_published = 1
     `).all(userInfo.id, 'AC').length;
 
-    return res.json({ submit, solved});
+    return res.json({ submit, solved });
 });
 
 // returns:
