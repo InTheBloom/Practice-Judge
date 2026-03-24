@@ -80,14 +80,14 @@ export default function Problems ({ loaderData }) {
 
             <hr />
 
-            <div>
-                <div style={{ marginBottom: "1em" }}>
+            <div style={{ display: "flex", columnGap: "1em", marginBottom: "1em" }}>
+                <div>
+                    <AscRadioButton state={order} setter={setOrder} />
+                </div>
+                <div>
                     <ToggleSwitch state={hideSolved} setter={setHideSolved} >
                         解決済を非表示
                     </ToggleSwitch>
-                </div>
-                <div>
-                    <AscRadioButton state={order} setter={setOrder} />
                 </div>
             </div>
 
