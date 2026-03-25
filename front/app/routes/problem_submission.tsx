@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router";
 import { BASEURL } from "../backend_url";
 import { AceEditorReadOnly } from "../ace_editor.tsx";
+import { toJST } from '../utils';
 
 export async function clientLoader ({ params }) {
     const res = await fetch(new URL(`/api/problems/no/${params.problemId}/submissions/${params.submissionId}`, BASEURL).href, {
@@ -36,19 +37,6 @@ export function meta({ data }) {
     return [
         { title: `${title} - Practice Judge` },
     ];
-}
-
-// JST に変換
-function toJST(datetime: string) {
-    return new Date(datetime + "Z").toLocaleString("ja-JP", {
-        timeZone: "Asia/Tokyo",
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-    });
 }
 
 export default function Page({ loaderData, params }) {

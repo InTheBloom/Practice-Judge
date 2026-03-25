@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from 'react-router';
 import { BASEURL } from '../backend_url';
+import { isValidUsername, isValidPassword } from '../utils';
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -8,44 +9,6 @@ export function meta({}: Route.MetaArgs) {
   ];
 }
 
-const isValidUsername = (name: string) => {
-    // 文字数制約
-    const segmenter = new Intl.Segmenter("ja", { granularity: "grapheme" });
-    const charCount = [...segmenter.segment(name)].length;
-
-    if (charCount < 1 || charCount > 20) {
-        return false;
-    }
-
-    // UTF-16コード数（JSのlengthはUTF-16）
-    if (name.length > 100) {
-        return false;
-    }
-
-    // 使用不可文字
-    const banned = /[!#$&'()*+,\/:;=?@\[\]]/;
-    if (banned.test(name)) {
-        return false;
-    }
-
-    return true;
-};
-
-const isValidPassword = (pass: string) => {
-    // 許可文字のみ
-    const allowed = /^[A-Za-z0-9 !"#$%&'()\-\^\\@\[;:\],.\/=~|`{+*}<>?_]+$/;
-    if (!allowed.test(pass)) {
-        return false;
-    }
-    if (pass.length < 10) {
-        return false;
-    }
-    if (pass.length > 50) {
-        return false;
-    }
-
-    return true;
-};
 
 export default function SignUpPage() {
   const [username, setUsername] = useState("");

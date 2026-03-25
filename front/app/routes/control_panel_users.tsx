@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router";
 import { BASEURL } from '../backend_url';
+import { toJST } from '../utils';
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -62,16 +63,4 @@ export default function AllUsers ({ loaderData }) {
         </main>
     </>
     );
-}
-
-function toJST(datetime: string) {
-    return new Date(datetime + "Z").toLocaleString("ja-JP", {
-        timeZone: "Asia/Tokyo",
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-    });
 }

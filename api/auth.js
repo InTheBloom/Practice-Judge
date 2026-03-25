@@ -145,3 +145,86 @@ authRouter.post('/signup', async (req, res) => {
 
     return res.status(202).end();
 });
+
+authRouter.post('/change-username', loginOnly, async (req, res) => {
+    const userInfo = checkUserStatus(req.session);
+
+    // 必要フィールドの確認
+    const { newUsername, password } = req.body;
+    if (typeof newUsername !== "string" || typeof password !== "string") {
+        return res.status(400).json({
+            error: "新しいユーザ名及びパスワードを指定してください。",
+        });
+    }
+
+    // チェック
+    if (!isValidUsername(newUsername)) {
+        return res.status(400).json({
+            error: "新しいユーザ名が条件を満たしていません。",
+        });
+    }
+
+    // パスワードの整合性を確認
+    const hashed = db.prepare(`
+        SELECT password_hash
+        FROM users
+        WHERE id = ?;
+    `).get(userInfo.user_id).password_hash;
+
+    const same = await bcrypt.compare(password, hashed);
+    if (!same) {
+        return res.status(400).json({
+            error: "パスワードが正しくありません。",
+        });
+    }
+
+    db.prepare(`
+        UPDATE users
+        SET username = ?
+        WHERE id = ?;
+    `).run(newUsername, userInfo.user_id);
+
+    res.end();
+});
+
+authRouter.post('/change-password', loginOnly, async (req, res) => {
+    const userInfo = checkUserStatus(req.session);
+
+    // 必要フィールドの確認
+    const { newPassword, password } = req.body;
+    if (typeof newPassword !== "string" || typeof password !== "string") {
+        return res.status(400).json({
+            error: "新しいパスワード及び現在のパスワードを指定してください。",
+        });
+    }
+
+    // チェック
+    if (!isValidPassword(newPassword)) {
+        return res.status(400).json({
+            error: "新しいパスワードが条件を満たしていません。",
+        });
+    }
+
+    // パスワードの整合性を確認
+    const hashed = db.prepare(`
+        SELECT password_hash
+        FROM users
+        WHERE id = ?;
+    `).get(userInfo.user_id).password_hash;
+
+    const same = await bcrypt.compare(password, hashed);
+    if (!same) {
+        return res.status(400).json({
+            error: "現在のパスワードが正しくありません。",
+        });
+    }
+
+    const newHashed = await bcrypt.hash(newPassword, saltRounds);
+    db.prepare(`
+        UPDATE users
+        SET password_hash = ?
+        WHERE id = ?;
+    `).run(newHashed, userInfo.user_id);
+
+    res.end();
+});

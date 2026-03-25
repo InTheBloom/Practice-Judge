@@ -1,6 +1,7 @@
 import { Link, useNavigate, useSearchParams } from "react-router";
 import { useState, useEffect, useRef } from "react";
 import { BASEURL } from "../backend_url";
+import { toJST } from '../utils';
 
 export async function clientLoader ({ request, params }) {
     const url = new URL(request.url);
@@ -60,18 +61,6 @@ export function meta ({ params, data }) {
     return [
         { title: `${data?.title} ${prefix}提出一覧 - Practice Judge` },
     ];
-}
-
-function toJST(datetime: string) {
-    return new Date(datetime + "Z").toLocaleString("ja-JP", {
-        timeZone: "Asia/Tokyo",
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-    });
 }
 
 export default function Page ({ loaderData }) {

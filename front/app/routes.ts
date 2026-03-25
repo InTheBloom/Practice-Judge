@@ -9,6 +9,11 @@ export default [
         // ユーザ画面
         route("/users/:userName", "routes/userpage.tsx"),
 
+        // 設定画面
+        layout("routes/login_layout.tsx", { id: "setting_login_guard" }, [
+            route("/settings", "routes/settings.tsx"),
+        ]),
+
         // ↓問題
         route("/problems", "routes/problems.tsx"),
 

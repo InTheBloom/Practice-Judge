@@ -60,16 +60,30 @@ function TitleMenu ({ loginInfo }) {
                     <details className="dropdown" style={{ "display": "inline-block" }} ref={userDropdownRef}>
                         <summary role="button" className="secondary">{loginInfo.username}</summary>
                         <ul>
-                            <li><Link
-                                to={`/users/${loginInfo.username}`}
-                                onClick={() => {
-                                    if (userDropdownRef.current?.open) {
-                                        userDropdownRef.current.open = false;
-                                    }
-                                }}
-                            >
-                                プロフィール
-                            </Link></li>
+                            <li>
+                                <Link
+                                    to={`/users/${loginInfo.username}`}
+                                    onClick={() => {
+                                        if (userDropdownRef.current?.open) {
+                                            userDropdownRef.current.open = false;
+                                        }
+                                    }}
+                                >
+                                    プロフィール
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
+                                    to={"/settings"}
+                                    onClick={() => {
+                                        if (userDropdownRef.current?.open) {
+                                            userDropdownRef.current.open = false;
+                                        }
+                                    }}
+                                >
+                                    設定
+                                </Link>
+                            </li>
                             <li
                                 role="button"
                                 onClick={handleLogout}
