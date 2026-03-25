@@ -169,14 +169,16 @@ export default function Page({ loaderData, params }) {
                     <tr>
                         <th scope="row">実行時間</th>
                         <td>
-                            {whole.time_sec == null ? "-" : whole.time_sec} / {whole.time_limit_sec} sec
+                            {whole.time_sec == null ? "-"
+                            : `${whole.time_sec} sec（${(whole.time_sec / whole.time_limit_sec).toFixed(4)} %）`}
                         </td>
                     </tr>
 
                     <tr>
                         <th scope="row">メモリ使用量</th>
                         <td>
-                            {whole.memory_kb == null ? "-" : whole.memory_kb} / {whole.memory_limit_kb} KB
+                            {whole.memory_kb == null ? "-"
+                            : `${whole.memory_kb} KB（${(whole.memory_kb / whole.memory_limit_kb).toFixed(4)} %）`}
                         </td>
                     </tr>
                 </tbody>

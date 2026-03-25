@@ -151,7 +151,7 @@ print(A + B)</code>
 
 <p><a href="/problems/no/1/submissions/70">実装例</a></p>`,
         2,
-        2000000,
+        256000,
         0,
         `# ./in ./in_user ./in_judgeの3ファイルが利用可能です。
 # ./in : 提出されたプログラムに入力されたデータ
