@@ -1,6 +1,7 @@
 import { BASEURL } from '../backend_url';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router';
+import { toJST } from '../utils';
 
 export function meta({ data }) {
     const uname = data?.userInfo?.username ?? "ユーザーが見つかりません";
@@ -176,16 +177,4 @@ function Card ({ name, value }) {
             <div style={{ fontSize: "1.5em" }}>{name}</div>
         </article>
     );
-}
-
-function toJST(datetime: string) {
-    return new Date(datetime + "Z").toLocaleString("ja-JP", {
-        timeZone: "Asia/Tokyo",
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-    });
 }

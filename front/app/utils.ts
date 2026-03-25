@@ -61,5 +61,5 @@ function toJST(datetime: string) {
 export {
     isValidUsername,
     isValidPassword,
-    toJst,
+    toJST,
 }
