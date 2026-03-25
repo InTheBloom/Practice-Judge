@@ -12,10 +12,18 @@ export default function ProblemPageLayout ({ params }) {
         <header className="container" style={{ marginBottom: "1em" }}>
             <nav>
                 <ul>
-                    <li><Link to={`/problems/no/${problemId}`}>問題文を見る</Link></li>
-                    <li><Link to={`/problems/no/${problemId}/submissions`}>提出一覧を見る</Link></li>
-                    <li><Link to={`/problems/no/${problemId}/submissions?username=${loginInfo.username}`}>自分の提出を見る</Link></li>
-                    <li><Link to={`/problems/no/${problemId}/editorial`}>解説を見る</Link></li>
+                    <li><Link to={`/problems/no/${problemId}`}>
+                        <span style={{ fontSize: "1.2em" }}>📝 問題文を見る</span>
+                    </Link></li>
+                    <li><Link to={`/problems/no/${problemId}/submissions`}>
+                        <span style={{ fontSize: "1.2em" }}>📊 提出一覧を見る</span>
+                    </Link></li>
+                    <li><Link to={`/problems/no/${problemId}/submissions?username=${loginInfo.username}`}>
+                        <span style={{ fontSize: "1.2em" }}>👤 自分の提出を見る</span>
+                    </Link></li>
+                    <li><Link to={`/problems/no/${problemId}/editorial`}>
+                        <span style={{ fontSize: "1.2em" }}>💡 解説を見る</span>
+                    </Link></li>
                 </ul>
             </nav>
         </header>
