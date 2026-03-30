@@ -28,6 +28,9 @@ export default [
         route("/problemsets/", "routes/problemsets.tsx"),
         route("/problemsets/no/:problemsetId", "routes/problemset_page.tsx"),
 
+        // ↓提出一覧
+        route("/submissions", "routes/submissions.tsx"),
+
         // ↓サインイン・ログイン画面
         route("/signup", "routes/signup.tsx"),
         route("/login", "routes/login.tsx"),
