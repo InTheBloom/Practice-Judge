@@ -443,7 +443,7 @@ problemRouter.post('/submit', loginOnly, (req, res) => {
     }
 });
 
-problemRouter.get('/submissions', loginOnly, (req, res) => {
+problemRouter.get('/submissions', (req, res) => {
     const pageSize = 20;
     let whereQuery = "WHERE 1 = 1";
     const whereParams = [];
@@ -528,7 +528,7 @@ problemRouter.get('/submissions', loginOnly, (req, res) => {
 
 // 提出一覧ページから個別に提出の更新をかけるためのapi
 problemRouter.get('/submissions/check-status/:submissionId', loginOnly, (req, res) => {
-    let where = `WHERE s.id = ? and p.id = ${req.params.id}`;
+    let where = `WHERE s.id = ? and p.id = ?`;
     if (!isAdmin(req.session)) {
         where += " and is_published = 1";
     }
@@ -546,7 +546,7 @@ problemRouter.get('/submissions/check-status/:submissionId', loginOnly, (req, re
         WHERE submission_id = ?
         ORDER BY testcase_name ASC;
     `);
-    const sub = sq.get(req.params.submissionId);
+    const sub = sq.get(req.params.submissionId, req.params.id);
     if (sub == null) {
         return res.status(404).end();
     }
@@ -556,7 +556,7 @@ problemRouter.get('/submissions/check-status/:submissionId', loginOnly, (req, re
 });
 
 problemRouter.get('/submissions/:submissionId', (req, res) => {
-    let where = `WHERE s.id = ? and p.id = ${req.params.id}`
+    let where = `WHERE s.id = ? and p.id = ?`;
     if (!isAdmin(req.session)) {
         where += " and p.is_published = 1";
     }
@@ -575,7 +575,7 @@ problemRouter.get('/submissions/:submissionId', (req, res) => {
         WHERE submission_id = ?
         ORDER BY testcase_name ASC;
     `);
-    const sub = sq.get(req.params.submissionId);
+    const sub = sq.get(req.params.submissionId, req.params.id);
     if (sub == null) {
         return res.status(404).end();
     }
