@@ -19,9 +19,7 @@ export default [
 
         layout("routes/problem_page_layout.tsx", [
             route("/problems/no/:problemId", "routes/problem_page.tsx"),
-            layout("routes/login_layout.tsx", [
-                route("/problems/no/:problemId/submissions", "routes/problem_submissions.tsx"),
-            ]),
+            route("/problems/no/:problemId/submissions", "routes/problem_submissions.tsx"),
             route("/problems/no/:problemId/submissions/:submissionId", "routes/problem_submission.tsx"),
             route("/problems/no/:problemId/editorial", "routes/problem_editorial.tsx"),
         ]),
