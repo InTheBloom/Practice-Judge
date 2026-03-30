@@ -228,3 +228,53 @@ authRouter.post('/change-password', loginOnly, async (req, res) => {
 
     res.end();
 });
+
+authRouter.post('/reset-password', adminOnly, async (req, res) => {
+    const userInfo = checkUserStatus(req.session);
+    const targetUserId = req.body.userId;
+    if (targetUserId == null) {
+        return res.status(400).json({ error: "ユーザーidを指定してください。" });
+    }
+
+    // adminはuserのみ
+    // inthebloomは自分以外変更できる
+
+    const target = db.prepare(`
+        SELECT id, role
+        FROM users
+        WHERE is_active = 1 and id = ?
+    `).get(targetUserId);
+
+    if (target == null) {
+        return res.status(400).json({ error: "指定ユーザーが存在しません。" });
+    }
+
+    let canChange = false;
+    if (userInfo.role == "admin") {
+        if (target.role == "user") {
+            canChange = true;
+        }
+    }
+    else if (userInfo.role == "inthebloom") {
+        if (userInfo.user_id != targetUserId) {
+            canChange = true;
+        }
+    }
+
+    if (!canChange) {
+        return res.status(403).json({ error: "指定ユーザーのパスワードリセットを行う権限がありません。" });
+    }
+
+    const ch = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    const randomPassword = Array.from(crypto.getRandomValues(new Uint8Array(15))).map((n)=>ch[n%ch.length]).join('');
+
+    // パスワード変更を行う
+    const hashed = await bcrypt.hash(randomPassword, saltRounds);
+    db.prepare(`
+        UPDATE users
+        SET password_hash = ?
+        WHERE id = ?
+    `).run(hashed, targetUserId);
+
+    res.json({ success: `仮パスワードは「${randomPassword}」です` });
+});
