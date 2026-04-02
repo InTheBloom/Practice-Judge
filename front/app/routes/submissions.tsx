@@ -93,7 +93,7 @@ export default function Page ({ loaderData }) {
 
     return (
         <main className="container">
-            <h2>提出一覧</h2>
+            <h1>提出一覧</h1>
 
             <article>
                 <h3 style={{display: "inline-block"}}>カスタム検索</h3>
