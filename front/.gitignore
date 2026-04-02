@@ -1,6 +1,6 @@
 .DS_Store
-.env
 /node_modules/
+# .envを外しているのは故意（秘匿するものがないので）
 
 # React Router
 /.react-router/

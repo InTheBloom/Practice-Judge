@@ -30,22 +30,27 @@ APIはexpress、フロントはvite + react-router v7で作成されています
 
 
 ## 起動方法
-`start.sh`単体で設定なく起動できるようにしているつもりです。
+上記依存ソフトウェアを正しくインストールした後、
+- `/api/.env`の設定（`.env.example`を参考に）
+
+を行う。
+セットアップの後は`start.sh`単体で設定なく起動できるようにしているつもりです。
 ただし、デプロイ環境がInTheBloomの想定するものでない場合、プロセスのポートなどは変更したほうが良いかもしれません。
+起動はできると思いますが、いろいろ暗黙知があり、現状私以外がメンテできる状況ではないと思います。
 
 
 
 
 ## ファイル配信周り
 static/以下が静的ファイルの配信。よってここは本番環境と開発環境で中身が変わる。
-開発時と本番時どちらもapiサーバからexpressで配信しているものをhttp://fronturl/staticからproxyを通すことで取りに行っている。開発時の設定は/front/vite.config.ts、本番時の設定は/front/serve.jsで行う。
+開発時と本番時どちらもapiサーバからexpressで配信しているものを`http://fronturl/static`からproxyを通すことで取りに行っている。開発時の設定は`/front/vite.config.ts`、本番時の設定は`/front/serve.js`で行う。
 
 ## 言語追加方法
 1. DockerFileにその言語のインストール設定を追記する。
 2. ジャッジデーモンで色々設定する。
     基本的に影響範囲は`constants.d`だけのはず。
 3. フロントで色々設定する。
-    * ホーム画面（front/app/routes/home.tsx）
+    * 説明画面（front/app/routes/for\_beginners.tsx）
     * 提出画面（front/app/routes/problem\_page.tsx）
     * 提出一覧画面（front/app/routes/problem\_submissions.tsx）
     * 個別問題管理画面（front/app/routes/control\_panel\_problem.tsx）
