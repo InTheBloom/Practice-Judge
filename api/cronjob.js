@@ -12,8 +12,8 @@ function setSchedule () {
 }
 
 function calculateRankingData () {
-    // 2時間おきに更新する。
-    cron.schedule("0 */2 * * *", () => {
+    // 大した負荷じゃなくね？と思ったので10分に一度更新
+    cron.schedule("*/10 * * * *", () => {
         console.log(`updating ranking run started at ${new Date()}.`);
 
         // うーん、sqlって難しいね...
