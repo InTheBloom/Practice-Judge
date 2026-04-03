@@ -140,6 +140,9 @@ apiRouter.use('/auth', authRouter);
 const { usersRouter } = require('./users.js');
 apiRouter.use('/users', usersRouter);
 
+const { rankingRouter } = require('./ranking.js');
+apiRouter.use('/ranking', rankingRouter);
+
 app.use('/api', apiRouter);
 
 // ========================================

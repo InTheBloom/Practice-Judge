@@ -13,14 +13,14 @@ CREATE TABLE IF NOT EXISTS users (
 );
 
 -- ============================================================
--- user_stats テーブル
--- ユーザーの成績を管理
+-- uer_rankingテーブル
+-- ユーザーのランキング計算用
 -- ============================================================
-CREATE TABLE IF NOT EXISTS user_stats (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    user_id INTEGER NOT NULL,
-    solved_count INTEGER NOT NULL,
-    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+CREATE TABLE IF NOT EXISTS user_ranking (
+    user_id INTEGER PRIMARY KEY,
+    stars INTEGER NOT NULL DEFAULT 0,
+    solved INTEGER NOT NULL DEFAULT 0,
+    updated_at DATETIME NOT NULL
 );
 
 -- ============================================================

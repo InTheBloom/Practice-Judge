@@ -118,6 +118,7 @@ function Menu () {
             <li><Link to={"/problemsets"}>問題セット一覧</Link></li>
             <li><Link to={"/problems"}>問題一覧</Link></li>
             <li><Link to={"/submissions"}>提出一覧</Link></li>
+            <li><Link to={"/ranking"}>ランキング</Link></li>
         </ul>
     </>
     );
