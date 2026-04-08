@@ -7,6 +7,9 @@ import {
   ScrollRestoration,
 } from "react-router";
 
+import { ColorModeProvider, useColorMode } from "./contexts";
+import { useEffect } from "react";
+
 import type { Route } from "./+types/root";
 import "./app.css";
 
@@ -23,9 +26,31 @@ export const links: Route.LinksFunction = () => [
   },
 ];
 
-export function Layout({ children }: { children: React.ReactNode }) {
+// Layoutは使わずに行きます。
+
+export default function App() {
   return (
-    <html lang="ja" data-theme="light">
+    <ColorModeProvider>
+      <Inner />
+    </ColorModeProvider>
+  );
+}
+
+function Inner () {
+  // カラーモード切替
+  const colorModeObj = useColorMode();
+
+  useEffect(() => {
+    if (colorModeObj?.colorMode != null) {
+        document.documentElement.setAttribute("data-theme", colorModeObj.colorMode);
+
+        document.documentElement.classList.remove("light", "dark");
+        document.documentElement.classList.add(colorModeObj.colorMode);
+    }
+  }, [colorModeObj]);
+
+  return (
+    <html lang="ja">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -33,16 +58,12 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        {children}
-        <ScrollRestoration />
         <Scripts />
+        <Outlet />
+        <ScrollRestoration />
       </body>
     </html>
   );
-}
-
-export default function App() {
-  return <Outlet />;
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {

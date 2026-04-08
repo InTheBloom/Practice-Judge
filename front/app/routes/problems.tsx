@@ -46,10 +46,10 @@ export default function Problems ({ loaderData }) {
 
     function calcColor (problem) {
         if (solved[problem.id] != null) {
-            return "pico-background-green-50";
+            return "var(--solved-bg)";
         }
         if (submitted[problem.id] != null) {
-            return "pico-background-pumpkin-50";
+            return "var(--tried-bg)";
         }
         return "";
     }
@@ -109,10 +109,10 @@ export default function Problems ({ loaderData }) {
                             }
                             return (
                                 <tr key={p.id}>
-                                    <td className={calcColor(p)}>{p.id}</td>
-                                    <td className={calcColor(p)}><Link to={`/problems/no/${p.id}`}>{p.title}{!p.is_published && <span className="pico-color-red-450">（非公開）</span>}</Link></td>
-                                    <td className={calcColor(p)}>{diff}</td>
-                                    <td className={calcColor(p)}>
+                                    <td style={{ background: `${calcColor(p)}`}}>{p.id}</td>
+                                    <td style={{ background: `${calcColor(p)}`}}><Link to={`/problems/no/${p.id}`}>{p.title}{!p.is_published && <span className="pico-color-red-450">（非公開）</span>}</Link></td>
+                                    <td style={{ background: `${calcColor(p)}`}}>{diff}</td>
+                                    <td style={{ background: `${calcColor(p)}`}}>
                                         {rate[p.id] == null ? 0 : rate[p.id].solvers}
                                         /
                                         {rate[p.id] == null ? 0 : rate[p.id].challengers}

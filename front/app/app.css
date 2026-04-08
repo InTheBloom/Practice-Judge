@@ -1,9 +1,24 @@
 @import "@picocss/pico/css/pico.slate.css";
 @import "@picocss/pico/css/pico.colors.css";
 
+html {
+    --header-bg: var(--pico-color-sand-100);
+    --solved-bg: var(--pico-color-green-50);
+    --tried-bg: var(--pico-color-pumpkin-50);
+    --submitted-bg: var(--pico-color-pumpkin-50);
+}
+
+html.dark {
+    --header-bg: var(--pico-color-sand-800);
+    --solved-bg: var(--pico-color-green-800);
+    --tried-bg: var(--pico-color-pumpkin-800);
+    --submitted-bg: var(--pico-color-pumpkin-50);
+}
+
 .top-header {
     --pico-block-spacing-vertical: 0.5rem;
     --pico-nav-element-spacing-vertical: 0.7rem;
+    background: var(--header-bg);
 }
 
 .section-home {

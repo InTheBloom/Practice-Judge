@@ -46,10 +46,10 @@ export default function Problemsets ({ loaderData }) {
         const solvedCount = registeredProblems.reduce((acc, p) => acc + (p.problemset_id == setid && solved[p.problem_id] != null ? 1 : 0), 0);
 
         if (problemCount == solvedCount) {
-            return "pico-background-green-50";
+            return "var(--solved-bg)";
         }
         if (solvedCount > 0) {
-            return "pico-background-pumpkin-50";
+            return "var(--tried-bg)";
         }
         return "";
     }
@@ -62,7 +62,7 @@ export default function Problemsets ({ loaderData }) {
             <hr />
             {problemsets.map((ps) => {
                 return (
-                    <article key={ps.id} className={calcColor(ps.id)}>
+                    <article key={ps.id} style={{ background: `${calcColor(ps.id)}` }}>
                         <Link to={`/problemsets/no/${ps.id}`}>
                             {ps.title}
                         </Link>
