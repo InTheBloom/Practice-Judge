@@ -7,6 +7,9 @@ import "ace-builds/src-noconflict/mode-d";
 import "ace-builds/src-noconflict/mode-html";
 import "ace-builds/src-noconflict/mode-text";
 import "ace-builds/src-noconflict/theme-chrome";
+import "ace-builds/src-noconflict/theme-solarized_dark";
+
+import { useColorMode } from "./contexts";
 
 const normalizedLanguage = {
     C: "c_cpp",
@@ -18,11 +21,21 @@ const normalizedLanguage = {
     html: "html",
 };
 
+function getTheme () {
+    const colorModeObj = useColorMode();
+
+    if (colorModeObj == undefined || colorModeObj.colorMode == "light") {
+        return "chrome";
+    }
+    return "solarized_dark";
+}
+
 // workerを使おうとするとトラブるので使わない。
 // setOptionsで設定可能
 // 行数の自動調節もsetOptionsでできるのを発見した
 
 export function AceEditorReadOnly ({ language, value, expand }) {
+    console.log(getTheme());
     const lineCount = value.split(/\r\n|\r|\n/).length;
 
     const line = expand
@@ -35,7 +48,7 @@ export function AceEditorReadOnly ({ language, value, expand }) {
         <div className="ace-container">
             <AceEditor
                 mode={normalizedLanguage[language] ?? "text"}
-                theme="chrome"
+                theme={getTheme()}
                 value={value}
                 width="100%"
                 fontSize={16}
@@ -64,7 +77,7 @@ export function AceEditorWritable ({ language, value, onChange }) {
         <div className="ace-container">
             <AceEditor
                 mode={normalizedLanguage[language] ?? "text"}
-                theme="chrome"
+                theme={getTheme()}
                 value={value}
                 width="100%"
                 fontSize={16}

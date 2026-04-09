@@ -6,6 +6,8 @@ html {
     --solved-bg: var(--pico-color-green-50);
     --tried-bg: var(--pico-color-pumpkin-50);
     --submitted-bg: var(--pico-color-pumpkin-50);
+
+    --editor-color: #ebebeb;
 }
 
 html.dark {
@@ -13,6 +15,8 @@ html.dark {
     --solved-bg: var(--pico-color-green-800);
     --tried-bg: var(--pico-color-pumpkin-800);
     --submitted-bg: var(--pico-color-pumpkin-50);
+
+    --editor-color: #002B36;
 }
 
 .top-header {
@@ -66,7 +70,7 @@ button.searchbtn {
     padding: 0;
 }
 .ace-container {
-    border: 1px solid #ebebeb;
+    border: 3px solid var(--editor-color);
 }
 
 .button-small-padding {
