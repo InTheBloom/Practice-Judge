@@ -112,94 +112,97 @@ export default function ControlPanelProblemsetSet({ loaderData, params }) {
             </nav>
 
             <h2>セット編集 #{problemset.id}</h2>
-            <article>
-                <p>問題セット名: <strong>{problemset.title}</strong></p>
+            <div style={{ display: "flex" }}>
+                <article style={{ height: "110vh", overflowY: "scroll", flex: "6" }}>
+                    <p>問題セット名: <strong>{problemset.title}</strong></p>
 
-                <table>
-                    <thead>
-                        <tr>
-                            <th>問題順</th>
-                            <th>問題ID</th>
-                            <th>問題タイトル</th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody className="set-selector">
-                        {list.map((p, i) => (
-                            <tr key={`${i}-${problemsDict[p].id}`}>
-                                <td>
-                                    {i + 1}
-                                </td>
-                                <td>
-                                    {p}
-                                </td>
-                                <td>
-                                    <Link to={`/problems/no/${p}`}>
-                                        {problemsDict[p].title}
-                                        {problemsDict[p].is_published == 0 && "（非公開）"}
-                                    </Link>
-                                </td>
-                                <td>
-                                    {0 < i && <button onClick={() => swapup(i)}>↑</button>}
-                                </td>
-                                <td>
-                                    {i < list.length - 1 && <button onClick={() => swapdown(i)}>↓</button>}
-                                </td>
-                                <td>
-                                    <button onClick={() => removeItem(i)}>削除</button>
-                                </td>
+                    <div style={{ display: "flex" }}>
+                        <button
+                            onClick={onSave}
+                            disabled={saving}
+                            aria-busy={saving ? "true" : "false"}
+                        >
+                            {saving ? "保存中..." : "保存する"}
+                        </button>
+                        {msg && <p className="pico-color-red-500">{msg}</p>}
+
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>問題順</th>
+                                    <th>問題ID</th>
+                                    <th>問題タイトル</th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody className="set-selector">
+                                {list.map((p, i) => (
+                                    <tr key={`${i}-${problemsDict[p].id}`}>
+                                        <td>
+                                            {i + 1}
+                                        </td>
+                                        <td>
+                                            {p}
+                                        </td>
+                                        <td>
+                                            <Link to={`/problems/no/${p}`}>
+                                                {problemsDict[p].title}
+                                                {problemsDict[p].is_published == 0 && "（非公開）"}
+                                            </Link>
+                                        </td>
+                                        <td>
+                                            {0 < i && <button onClick={() => swapup(i)}>↑</button>}
+                                        </td>
+                                        <td>
+                                            {i < list.length - 1 && <button onClick={() => swapdown(i)}>↓</button>}
+                                        </td>
+                                        <td>
+                                            <button onClick={() => removeItem(i)}>削除</button>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                </article>
+
+                <article style={{ height: "110vh", overflowY: "scroll", flex: "4" }}>
+                    <h3 style={{ marginTop: "1em" }}>問題一覧</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>問題ID</th>
+                                <th>問題タイトル</th>
+                                <th>難易度</th>
+                                <th></th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
-
-                <button
-                    onClick={onSave}
-                    disabled={saving}
-                    aria-busy={saving ? "true" : "false"}
-                >
-                    {saving ? "保存中..." : "保存する"}
-                </button>
-
-                {msg && <p className="pico-color-red-500">{msg}</p>}
-            </article>
-
-            <article>
-                <h3 style={{ marginTop: "1em" }}>問題一覧</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>問題ID</th>
-                            <th>問題タイトル</th>
-                            <th>難易度</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {problems.map((p, i) => (
-                            <tr key={p.id}>
-                                <td>
-                                    {p.id}
-                                </td>
-                                <td>
-                                    <Link to={`/problems/no/${p.id}`}>
-                                        {p.title}
-                                        {p.is_published == 0 && "（非公開）"}
-                                    </Link>
-                                </td>
-                                <td>
-                                    {p.difficulty}
-                                </td>
-                                <td>
-                                    <button onClick={() => addItem(p)}>追加</button>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </article>
+                        </thead>
+                        <tbody>
+                            {problems.map((p, i) => (
+                                <tr key={p.id}>
+                                    <td>
+                                        {list.includes(p.id) && "✅"}{p.id}
+                                    </td>
+                                    <td>
+                                        <Link to={`/problems/no/${p.id}`}>
+                                            {p.title}
+                                            {p.is_published == 0 && "（非公開）"}
+                                        </Link>
+                                    </td>
+                                    <td>
+                                        {p.difficulty}
+                                    </td>
+                                    <td>
+                                        <button onClick={() => addItem(p)}>追加</button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </article>
+            </div>
         </main>
     );
 }
