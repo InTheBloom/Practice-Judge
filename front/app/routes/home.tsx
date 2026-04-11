@@ -31,8 +31,8 @@ export default function Home() {
                 <h2>開発者連絡先</h2>
                 <address>
                     メール: <a href="mailto:nato.rider.smm2@gmail.com">nato.rider.smm2@gmail.com</a><br />
-                    GitHub: <a href="https://github.com/InTheBloom">InTheBloom</a><br />
-                    Twitter: <a href="https://x.com/UU9782wsEdANDhp">@UU9782wsEdANDhp</a>
+                    GitHub: <a href="https://github.com/InTheBloom" target="_blank" rel="noopener noreferrer">InTheBloom</a><br />
+                    Twitter: <a href="https://x.com/UU9782wsEdANDhp" target="_blank" rel="noopener noreferrer">@UU9782wsEdANDhp</a>
                 </address>
             </section>
         </main>
