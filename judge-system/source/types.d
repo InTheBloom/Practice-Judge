@@ -98,8 +98,14 @@ struct Container {
                 ret.maxMemoryKb = max(ret.maxMemoryKb, cast(int)(memory / 1000));
 
                 // output length check
-                if (maxStdoutSize < getSize(stdoutFileName) || maxStderrSize < getSize(stderrFileName)) {
-                    ole = true;
+                try {
+                    if (maxStdoutSize < getSize(stdoutFileName) || maxStderrSize < getSize(stderrFileName)) {
+                        ole = true;
+                    }
+                }
+                catch (Exception e) {
+                    // file not found...?
+                    stderr.writefln("[ERROR] OLE監視において標準出力ファイル、標準エラー出力ファイルの読み取りに失敗しました:\n%s", e.msg);
                 }
 
                 // time check
