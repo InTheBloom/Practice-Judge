@@ -12,32 +12,35 @@ function setSchedule () {
 }
 
 function calculateRankingData () {
+    const deleteRanking = db.prepare(`
+        DELETE FROM user_ranking;
+    `);
+    const insertRanking = db.prepare(`
+        INSERT INTO user_ranking (user_id, stars, solved, updated_at)
+        SELECT
+            s.user_id,
+            SUM(p.difficulty) AS stars,
+            COUNT(*) AS solved,
+            CURRENT_TIMESTAMP
+        FROM (
+            SELECT DISTINCT user_id, problem_id
+            FROM submissions
+            WHERE
+                status = 'AC'
+                AND created_at >= DATETIME('now', '-7 days')
+        ) s
+        JOIN problems p ON s.problem_id = p.id
+        GROUP BY s.user_id;
+    `);
+    const updateRanking = db.transaction(() => {
+        deleteRanking.run();
+        insertRanking.run();
+    });
+
     // 大した負荷じゃなくね？と思ったので10分に一度更新
     cron.schedule("*/10 * * * *", () => {
         console.log(`updating ranking run started at ${new Date()}.`);
-
-        // うーん、sqlって難しいね...
-        const query = db.prepare(`
-            INSERT INTO user_ranking (user_id, stars, solved, updated_at)
-            SELECT
-                s.user_id,
-                SUM(p.difficulty) AS stars,
-                COUNT(*) AS solved,
-                CURRENT_TIMESTAMP
-            FROM (
-                SELECT DISTINCT user_id, problem_id
-                FROM submissions
-                WHERE
-                    status = 'AC'
-                    AND created_at >= DATETIME('now', '-7 days')
-            ) s
-            JOIN problems p ON s.problem_id = p.id
-            GROUP BY s.user_id
-            ON CONFLICT(user_id) DO UPDATE SET
-                stars = excluded.stars,
-                solved = excluded.solved,
-                updated_at = excluded.updated_at;
-        `).run();
+        updateRanking();
     });
 }
 
