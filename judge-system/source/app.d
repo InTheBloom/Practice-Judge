@@ -271,20 +271,20 @@ void startJudgeTask (JudgeTask t) {
                 isMLE = true;
                 continue;
             }
+
+            // OLE
+            if (ret.OLE) {
+                setResultOLE(resultIds[i]);
+                isOLE = true;
+                continue;
+            }
+
+            // TLE
             if (ret.TLE || doubleToDuration(t.problem.timeLimitSec) < ret.elapsedTime) {
                 setResultTLE(resultIds[i]);
                 isTLE = true;
                 continue;
             }
-
-            // OLE
-            stdoutFile.open(stdoutFile.name, "r");
-            if (maxStdoutSize < stdoutFile.size()) {
-                setResultOLE(resultIds[i]);
-                isOLE = true;
-                continue;
-            }
-            stdoutFile.close();
 
             // RE
             if (ret.status != 0) {

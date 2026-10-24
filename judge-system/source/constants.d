@@ -7,6 +7,7 @@ import std.path;
 
 immutable pollingInterval = 1.seconds;
 immutable maxStdoutSize = 1 << 25;
+immutable maxStderrSize = 1 << 25;
 immutable int compileMemoryLimitKb = 2000000;
 immutable Duration compileTimeLimit = 5.seconds;
 

@@ -68,6 +68,8 @@ struct Container {
     }
 
     ExecuteResult run (File stdinFile, File stdoutFile, File stderrFile, Duration timeLimit) {
+        string stdoutFileName = stdoutFile.name;
+        string stderrFileName = stderrFile.name;
         auto pid = spawnShell(format("docker container start --interactive %s", containerId), stdinFile, stdoutFile, stderrFile);
         ExecuteResult ret;
 
@@ -75,6 +77,7 @@ struct Container {
             auto begin = Clock.currTime();
             auto end = Clock.currTime();
             auto acc = 0.seconds;
+            bool ole = false;
             bool start = false;
             while (true) {
                 // memory check
@@ -93,6 +96,11 @@ struct Container {
                     return ret;
                 }();
                 ret.maxMemoryKb = max(ret.maxMemoryKb, cast(int)(memory / 1000));
+
+                // output length check
+                if (maxStdoutSize < getSize(stdoutFileName) || maxStderrSize < getSize(stderrFileName)) {
+                    ole = true;
+                }
 
                 // time check
                 auto pidFilePaths = generateCgroupPidsFile(containerId);
@@ -122,6 +130,11 @@ struct Container {
                 if (!state.terminated && timeLimit < acc) {
                     kill(pid);
                     ret.TLE = true;
+                    break;
+                }
+                if (!state.terminated && ole) {
+                    kill(pid);
+                    ret.OLE = true;
                     break;
                 }
 
@@ -208,6 +221,7 @@ struct Testcase {
 
 struct ExecuteResult {
     bool TLE = false;
+    bool OLE = false;
     int status = 1;
     int maxMemoryKb = 0;
     Duration elapsedTime;
