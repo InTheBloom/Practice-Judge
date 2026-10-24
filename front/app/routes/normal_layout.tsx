@@ -16,6 +16,12 @@ export default function Outer ({ loaderData }) {
 
     return (
     <>
+        <div className="halloween-sky" aria-hidden="true">
+            <span className="halloween-moon" />
+            <span className="halloween-bat halloween-bat-one">🦇</span>
+            <span className="halloween-bat halloween-bat-two">🦇</span>
+            <span className="halloween-ghost">👻</span>
+        </div>
         <header className="top-header container-fluid" >
             <nav>
                 <TitleMenu loginInfo={loginInfo} />
@@ -23,6 +29,15 @@ export default function Outer ({ loaderData }) {
             <nav>
                 <Menu />
             </nav>
+            <div className="halloween-garland" aria-hidden="true">
+                <span />
+                <span />
+                <span />
+                <span />
+                <span />
+                <span />
+                <span />
+            </div>
         </header>
 
         <div className="maincontents">
@@ -52,8 +67,15 @@ function TitleMenu ({ loginInfo }) {
         }
     }
 
-
-    const title = <Link to="/" style={{ fontSize: "2em", textDecoration: "none" }}>Practice Judge</Link>;
+    const title = (
+        <Link to="/" className="halloween-brand" aria-label="Practice Judge ホーム">
+            <span className="halloween-brand-icon" aria-hidden="true">🎃</span>
+            <span className="halloween-brand-copy">
+                <strong>Practice Judge</strong>
+                <small>HALLOWEEN EDITION</small>
+            </span>
+        </Link>
+    );
 
     const toggle = () => {
         if (colorModeObj == null) {

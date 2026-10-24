@@ -1,17 +1,45 @@
-import { Link } from 'react-router';
-import { BASEURL } from '../backend_url';
-
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "ホーム - Practice Judge" },
+    { title: "Halloween Night - Practice Judge" },
   ];
 }
 
 export default function Home() {
     return (
-        <main className="container">
+        <main className="container halloween-home">
+            <section className="halloween-hero">
+                <div className="halloween-hero-copy">
+                    <p className="halloween-eyebrow">OCTOBER 2026</p>
+                    <h1>
+                        HAPPY
+                        <strong>HALLOWEEN!</strong>
+                    </h1>
+                </div>
+
+                <div className="haunted-terminal" aria-label="ハロウィンテーマの装飾">
+                    <div className="haunted-terminal-bar" aria-hidden="true">
+                        <span />
+                        <span />
+                        <span />
+                        <small>midnight_judge.sh</small>
+                    </div>
+                    <div className="haunted-terminal-body">
+                        <p><span className="terminal-prompt">$</span> echo "Happy Halloween"</p>
+                        <p className="terminal-muted">The night is full of bugs...</p>
+                        <p>pumpkin.cpp <span className="terminal-ok">🎃</span></p>
+                        <p>ghost.rs <span className="terminal-ok">👻</span></p>
+                        <p>candy.py <span className="terminal-ok">🍬</span></p>
+                        <div className="terminal-verdict">
+                            <span>OCTOBER 31</span>
+                            <strong>BOO!</strong>
+                        </div>
+                    </div>
+                    <span className="terminal-spider" aria-hidden="true">🕷️</span>
+                </div>
+            </section>
+
             <section className="section-home">
-                <h1>Practice Judgeにようこそ</h1>
+                <h2>Practice Judgeにようこそ</h2>
                 <p>
                     Practice Judgeは、プログラミングの実践的な練習問題を解くことができるオンラインジャッジです。
                     ユーザーが作成、提出したプログラムをPractice Judgeのサーバーが実行し、正誤判定を行います。
