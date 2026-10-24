@@ -119,14 +119,19 @@ long[] insertResults (long submissionId, Testcase[] testcases) {
     auto ret = new long[](testcases.length);
     foreach (i, ref testcase; testcases.enumerate(0)) {
         runSQLStatement(() {
-            db.execute(format("INSERT INTO results (submission_id, testcase_id, testcase_name, status) VALUES (%s, %s, '%s', '%s');",
-                submissionId,
-                testcase.testcaseId,
-                testcase.testcaseName,
-                JudgeProcessState.pending,
-            ));
+            {
+                auto st = db.prepare("INSERT INTO results (submission_id, testcase_id, testcase_name, status) VALUES (:sid, :tid, :tname, :stat)");
+                st.bind(":sid", submissionId);
+                st.bind(":tid", testcase.testcaseId);
+                st.bind(":tname", testcase.testcaseName);
+                st.bind(":stat", cast(string)(JudgeProcessState.pending));
+                st.execute();
+            }
 
-            auto res = db.execute(format("SELECT id FROM results WHERE submission_id = %s and testcase_id = %s;", submissionId, testcase.testcaseId));
+            auto st = db.prepare("SELECT id FROM results WHERE submission_id = :sid and testcase_id = :tid");
+            st.bind(":sid", submissionId);
+            st.bind(":tid", testcase.testcaseId);
+            auto res = st.execute();
 
             ret[i] = res.front()["id"].as!(long);
         });
@@ -139,7 +144,10 @@ void setResultExecuting (long resultId) {
     Database db;
     initDbConnection(db);
     runSQLStatement(() {
-        db.execute(format("UPDATE results SET status = '%s' WHERE id = %s;", JudgeProcessState.executing, resultId));
+        auto st = db.prepare("UPDATE results SET status = :stat WHERE id = :id");
+        st.bind(":stat", cast(string)(JudgeProcessState.executing));
+        st.bind(":id", resultId);
+        st.execute();
     });
 }
 
@@ -147,7 +155,10 @@ void setResult (long resultId, JudgeStatus status) {
     Database db;
     initDbConnection(db);
     runSQLStatement(() {
-        db.execute(format("UPDATE results SET status = '%s' WHERE id = %s;", status, resultId));
+        auto st = db.prepare("UPDATE results SET status = :stat WHERE id = :id");
+        st.bind(":stat", cast(string)(status));
+        st.bind(":id", resultId);
+        st.execute();
     });
 }
 
@@ -155,7 +166,12 @@ void setResultWithStat (long resultId, JudgeStatus status, double timeSec, int m
     Database db;
     initDbConnection(db);
     runSQLStatement(() {
-        db.execute(format("UPDATE results SET status = '%s', time_sec = %s, memory_kb = %s WHERE id = %s;", status, timeSec, memoryKb, resultId));
+        auto st = db.prepare("UPDATE results SET status = :stat, time_sec = :tsec, memory_kb = :mkb WHERE id = :id");
+        st.bind(":stat", cast(string)(status));
+        st.bind(":tsec", timeSec);
+        st.bind(":mkb", memoryKb);
+        st.bind(":id", resultId);
+        st.execute();
     });
 }
 
