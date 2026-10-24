@@ -67,6 +67,26 @@ struct Container {
         }
     }
 
+    bool killContainer () {
+        // TLEプロセス生き残っていた問題の解消
+        // 既存実装ではホスト側のspawnShellで生まれたプロセスのpidを持っていた
+        // spawnShellのプロセス -> docker daemon -> dockerのプロセス
+        // という関係になり、あくまで呼び出してるだけという形になっている。なので、打ち切り時にはdaemon経由で直接止めないとダメだと思われる。
+        // 直接containerIdを利用してstopさせる。
+
+        if (containerId != "") {
+            auto ret = execute([
+                "docker", "container", "kill", "--signal", "KILL", containerId
+            ]);
+            if (ret.status != 0) {
+                writefln("[ERROR] コンテナ停止失敗:\nid=%s\nmsg=%s", containerId, ret.output);
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     ExecuteResult run (File stdinFile, File stdoutFile, File stderrFile, Duration timeLimit) {
         string stdoutFileName = stdoutFile.name;
         string stderrFileName = stderrFile.name;
@@ -134,12 +154,17 @@ struct Container {
                     break;
                 }
                 if (!state.terminated && timeLimit < acc) {
-                    kill(pid);
+                    // 正常系を想定
+                    killContainer();
+                    wait(pid);
+
                     ret.TLE = true;
                     break;
                 }
                 if (!state.terminated && ole) {
-                    kill(pid);
+                    // 正常系を想定
+                    killContainer();
+                    wait(pid);
                     ret.OLE = true;
                     break;
                 }
